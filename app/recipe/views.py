@@ -30,10 +30,14 @@ class IngredientViewSet(
     """Manage ingredients in the database"""
 
     authentication_classes = (TokenAuthentication,)
-    permissions_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
     queryset = Ingredient.objects.all()
     serializer_class = serializers.IngredientSerializer
 
     def get_queryset(self):
         """return objects for the current authenticated user"""
         return self.queryset.filter(user=self.request.user).order_by("-name")
+
+    def perform_create(self, serializer):
+        """Create a new ingredient"""
+        serializer.save(user=self.request.user)
