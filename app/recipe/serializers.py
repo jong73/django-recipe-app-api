@@ -7,5 +7,6 @@ class TagSerializer(serializers.ModelSerializer):
     """serializer for tag objects"""
 
     class Meta:
-        model = Tagfields = ("id", "name")
+        model = Tag
+        fields = ("id", "name")
         read_only_fields = ("id",)
